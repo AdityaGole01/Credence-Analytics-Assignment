@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+  <div class="container">
+    <h1>Assignment</h1>
+   <p style="text-align: right;"> <button type="button" class="btn btn-primary" id="addNewButton">Add New</button></p>
+    <form id="employeeForm" style="display: none;">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter name">
+      </div>
+      <div class="mb-3">
+        <label for="designation" class="form-label">Designation</label>
+        <input type="text" class="form-control" id="designation" placeholder="Enter designation">
+      </div>
+      <div class="mb-3">
+        <label for="joiningDate" class="form-label">Joining Date</label>
+        <input type="date" class="form-control" id="joiningDate">
+      </div>
+      <div class="mb-3">
+        <label for="age" class="form-label">Age</label>
+        <input type="number" class="form-control" id="age" placeholder="Enter age">
+      </div>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="submit" class="btn btn-primary me-md-2">Save</button>
+        <button type="reset" class="btn btn-secondary me-md-2">Clear</button>
+        <button type="reset" class="btn btn-danger">Cancel</button>
+      </div>
+    </form>
+    <hr>
+    <h2>Employee Table</h2>
+    <table class="table table-striped" id="employeeTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Designation</th>
+          <th>Joining Date</th>
+          <th>Age</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    document.getElementById('addNewButton').addEventListener('click', function() {
+      document.getElementById('addNewButton').style.display = 'none';
+      document.getElementById('employeeForm').style.display = 'block';
+    });
+
+    document.getElementById('employeeForm').addEventListener('submit', function(event) {
+      event.preventDefault(); 
+      if (validateForm()) {
+        appendToTable(); 
+      }
+    });
+
+    function validateForm() {
+      var name = document.getElementById('name').value;
+      var designation = document.getElementById('designation').value;
+      var joiningDate = document.getElementById('joiningDate').value;
+      var age = document.getElementById('age').value;
+
+      if (name === '' || designation === '' || joiningDate === '' || age === '') {
+        alert('Please fill in all required fields.');
+        return false; 
+      }
+
+      
+      console.log('Form submitted successfully!');
+      return true;
+    }
+
+    function appendToTable() {
+      var name = document.getElementById('name').value;
+      var designation = document.getElementById('designation').value;
+      var joiningDate = document.getElementById('joiningDate').value;
+      var age = document.getElementById('age').value;
+
+      var table = document.getElementById('employeeTable');
+      var newRow = table.insertRow();
+      var cell1 = newRow.insertCell(0);
+      var cell2 = newRow.insertCell(1);
+      var cell3 = newRow.insertCell(2);
+      var cell4 = newRow.insertCell(3);
+      var cell5 = newRow.insertCell(4);
+
+      cell1.textContent = name;
+      cell2.textContent = designation;
+      cell3.textContent = joiningDate;
+      cell4.textContent = age;
+
+      var deleteButton = document.createElement('button');
+      deleteButton.className = 'btn btn-danger';
+      deleteButton.textContent = 'Delete';
+      deleteButton.addEventListener('click', function() {
+        newRow.remove();
+      });
+      cell5.appendChild(deleteButton);
+
+      document.getElementById('name').value = '';
+      document.getElementById('designation').value = '';
+      document.getElementById('joiningDate').value = '';
+      document.getElementById('age').value = '';
+
+      document.getElementById('addNewButton').style.display = 'block';
+      document.getElementById('employeeForm').style.display = 'none';
+    }
+
+    document.getElementById('employeeForm').addEventListener('reset', function() {
+      document.getElementById('addNewButton').style.display = 'block';
+      document.getElementById('employeeForm').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
